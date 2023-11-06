@@ -7,7 +7,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const PORT =3010;
+const PORT =3000;
 
 const app=express();
 
