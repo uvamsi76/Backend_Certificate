@@ -84,7 +84,7 @@ export const generatehash =async (req:Request,res:Response)=> {
         res.status(500).send({message:"certificate failed Internal error"})
         return
     }
-    res.status(200).send({certificate:hash,firstname:user.firstname,lastname:user.lastname})
+    res.status(200).send({certificate:user.s3link,firstname:user.firstname,lastname:user.lastname,hash:hash})
     
 }
 
