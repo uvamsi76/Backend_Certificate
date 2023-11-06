@@ -3,9 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 import {SECRET,authenticateJwt} from "../middleware/auth"
-import {userSchema , userloginSchema} from "../zodschemas/userschema"
 import { PrismaClient } from '@prisma/client'
-import { UserType } from '../zodschemas/userschema'
 import { string } from "zod";
 import generateCertificate from "../util/generateCertificate";
 const prisma = new PrismaClient()
