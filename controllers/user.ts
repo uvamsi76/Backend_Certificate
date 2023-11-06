@@ -7,6 +7,7 @@ import {userSchema , userloginSchema} from "../zodschemas/userschema"
 import { PrismaClient } from '@prisma/client'
 import { UserType } from '../zodschemas/userschema'
 import { string } from "zod";
+import generateCertificate from "../util/generateCertificate";
 const prisma = new PrismaClient()
 
 
@@ -84,10 +85,11 @@ export const generatehash =async (req:Request,res:Response)=> {
         res.status(500).send({message:"certificate failed Internal error"})
         return
     }
+    const name=user.firstname+user.lastname
+    // generateCertificate('John Doe', 'Fullstack with harkirat', 'certificate.pdf','hbcjncdfnjxcnvouxkzc=');
+    await generateCertificate(name,'Fullstack with harkirat','../certificates/'+hash+'.pdf',hash)
     res.status(200).send({certificate:user.s3link,firstname:user.firstname,lastname:user.lastname,hash:hash})
-    // const name=user.firstname+user.lastname
-    // // generateCertificate('John Doe', 'Fullstack with harkirat', 'certificate.pdf','hbcjncdfnjxcnvouxkzc=');
-    // await generateCertificate(name,'Fullstack with harkirat','../certificates/'+hash+'.pdf',hash)
+    
     
     
 }
