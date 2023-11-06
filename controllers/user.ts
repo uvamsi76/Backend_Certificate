@@ -23,7 +23,7 @@ const validateemail =async (email:string,password:string)=>{
         if(user.password!=password){
             return false
         }
-        return true
+        return user
     }
     catch(error){
         console.error('Error finding user:', error);
@@ -68,8 +68,8 @@ export const generatehash =async (req:Request,res:Response)=> {
     const {email,password} = req.headers
     if(typeof(email)!="string") return
     if(typeof(password)!="string") return
-    const validation=await validateemail(email,password)
-    if(!validation){
+    const user=await validateemail(email,password)
+    if(!user){
         res.status(404).send({message:"invalid credentials or not registered to cohort"})
         return
     }
@@ -83,7 +83,7 @@ export const generatehash =async (req:Request,res:Response)=> {
         res.status(500).send({message:"certificate failed Internal error"})
         return
     }
-    res.status(200).send({certificate:hash})
+    res.status(200).send({certificate:hash,user:user})
     
 }
 
