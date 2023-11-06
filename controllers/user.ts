@@ -53,7 +53,7 @@ const emailvalidate =async (email:string)=>{
     }
 }
 export const verifyhash =async (req:Request,res:Response)=>{
-    const {hash}=req.body
+    const hash=req.params.hash
     const decodeddata=atob(hash)
     const email=decodeddata.split(" ")[0]
     const user=await emailvalidate(email)
@@ -61,11 +61,12 @@ export const verifyhash =async (req:Request,res:Response)=>{
         res.status(404).send({message:"enter valid certificate"})
         return
     }
-    res.status(200).send({user})
+    res.status(200).send({firstname:user.firstname,lastname:user.lastname,email:user.email,certificate:user.s3link})
 }
 
 export const generatehash =async (req:Request,res:Response)=> {
-    const {email,password} = req.headers
+    const email = req.headers["email"]
+    const password=req.headers["password"]
     if(typeof(email)!="string") return
     if(typeof(password)!="string") return
     const user=await validateemail(email,password)
@@ -83,7 +84,7 @@ export const generatehash =async (req:Request,res:Response)=> {
         res.status(500).send({message:"certificate failed Internal error"})
         return
     }
-    res.status(200).send({certificate:hash,user:user})
+    res.status(200).send({certificate:hash,firstname:user.firstname,lastname:user.lastname})
     
 }
 

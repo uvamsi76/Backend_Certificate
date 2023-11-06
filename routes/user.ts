@@ -11,7 +11,7 @@ const userrouter=express.Router();
 userrouter.use(express.json());
 userrouter.use(cors())
 
-userrouter.get('/getcertificate',verifyhash)
+userrouter.get('/getcertificate/:hash',verifyhash)
 
 userrouter.post('/generatecerificate',authenticateJwt,generatehash)
 
