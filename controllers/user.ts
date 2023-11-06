@@ -85,6 +85,10 @@ export const generatehash =async (req:Request,res:Response)=> {
         return
     }
     res.status(200).send({certificate:user.s3link,firstname:user.firstname,lastname:user.lastname,hash:hash})
+    // const name=user.firstname+user.lastname
+    // // generateCertificate('John Doe', 'Fullstack with harkirat', 'certificate.pdf','hbcjncdfnjxcnvouxkzc=');
+    // await generateCertificate(name,'Fullstack with harkirat','../certificates/'+hash+'.pdf',hash)
+    
     
 }
 
