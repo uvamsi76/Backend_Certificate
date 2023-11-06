@@ -6,6 +6,7 @@ import {SECRET,authenticateJwt} from "../middleware/auth"
 import {userSchema , userloginSchema} from "../zodschemas/userschema"
 import { PrismaClient } from '@prisma/client'
 import { UserType } from '../zodschemas/userschema'
+import { string } from "zod";
 const prisma = new PrismaClient()
 
 
@@ -105,3 +106,15 @@ export const handlelogin= async (req:Request,res:Response)=>{
         res.status(500).json({message:"internal error sorry for the inconvinience"})
       }
     }
+
+export const getcertificate= async (req:Request,res:Response)=>{
+    const email=req.headers["email"]
+    if(!email) return
+    if(typeof(email)!="string") return
+    const user=await emailvalidate(email)
+    if(!user){
+        res.status(404).send({message:"enter valid certificate"})
+        return
+    }
+    res.status(200).send({user})
+} 
