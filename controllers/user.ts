@@ -65,7 +65,9 @@ export const verifyhash =async (req:Request,res:Response)=>{
 }
 
 export const generatehash =async (req:Request,res:Response)=> {
-    const {email,password} = req.body
+    const {email,password} = req.headers
+    if(typeof(email)!="string") return
+    if(typeof(password)!="string") return
     const validation=await validateemail(email,password)
     if(!validation){
         res.status(404).send({message:"invalid credentials or not registered to cohort"})
@@ -99,7 +101,7 @@ export const handlelogin= async (req:Request,res:Response)=>{
           return
         }
         console.log(user.id)
-        const token = jwt.sign({ email, id: user.id}, SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ email, password}, SECRET, { expiresIn: '1h' });
         res.json({ message: 'Logged in successfully', token ,email});
       }
       catch(err){

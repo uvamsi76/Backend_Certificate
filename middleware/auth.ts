@@ -14,6 +14,7 @@ export const authenticateJwt = (req:Request,res:Response,next:NextFunction) => {
         }
         else if (payload && typeof payload !== "string") {
           req.headers["email"] = payload.email;
+          req.headers["password"]=payload.password
           next();
         }
         else {
